@@ -21,9 +21,6 @@ def build_data(citiesSearchedSeries, Tx = 10, user_ucountry = True):
     X = citiesSearchedSeries.apply(lambda x: x[0:-1])
     Y = citiesSearchedSeries.apply(lambda y: y[-1])
     
-    print("X.shape: {} & Y.shape: {}".format(X.shape, Y.shape))
-    print("\t\t\t ----- use user country for prediction? \t {} ------- \t\t\t".format(user_ucountry))
-    
     if user_ucountry:
         for x in citiesSearchedSeries:
         
@@ -84,17 +81,6 @@ def create_sample(sample, n_x, citiesIndexed, Tx = 10):
 def city_model(input_shape, n_x):
     
     # input_shape: (m, Tx, n_x)
-    """
-    Function creating the Emojify-v2 model's graph.
-    
-    Arguments:
-    input_shape -- shape of the input, usually (max_len,)
-    word_to_vec_map -- dictionary mapping every word in a vocabulary into its 50-dimensional vector representation
-    word_to_index -- dictionary mapping from words to their indices in the vocabulary (400,001 words)
-
-    Returns:
-    model -- a model instance in Keras
-    """
     
     ### START CODE HERE ###
     # Define sentence_indices as the input of the graph, it should be of shape input_shape and dtype 'int32' (as it contains indices).
@@ -136,87 +122,6 @@ def sample(preds, options, temperature=1.0):
 def on_epoch_end(epoch, logs):
     # Function invoked at end of each epoch. Prints generated text.
     None
-    #start_index = random.randint(0, len(text) - Tx - 1)
-    
-    #generated = ''
-    #sentence = text[start_index: start_index + Tx]
-    #sentence = '0'*Tx
-    #usr_input = input("Write the beginning of your poem, the Shakespearian machine will complete it.")
-    # zero pad the sentence to Tx characters.
-    #sentence = ('{0:0>' + str(Tx) + '}').format(usr_input).lower()
-    #generated += sentence
-#
-    #sys.stdout.write(usr_input)
-
-    #for i in range(400):
-"""
-        #x_pred = np.zeros((1, Tx, len(chars)))
-        for t, char in enumerate(sentence):
-            if char != '0':
-                x_pred[0, t, char_indices[char]] = 1.
-        preds = model.predict(x_pred, verbose=0)[0]
-        next_index = sample(preds, temperature = 1.0)
-        next_char = indices_char[next_index]
-        generated += next_char
-        sentence = sentence[1:] + next_char
-        sys.stdout.write(next_char)
-        sys.stdout.flush()
-        
-        if next_char == '\n':
-            continue
-        
-    # Stop at the end of a line (4 lines)
-    print()
-    
-print("Loading text data...")
-text = io.open('shakespeare.txt', encoding='utf-8').read().lower()
-#print('corpus length:', len(text))
-
-Tx = 40
-chars = sorted(list(set(text)))
-char_indices = dict((c, i) for i, c in enumerate(chars))
-indices_char = dict((i, c) for i, c in enumerate(chars))
-#print('number of unique characters in the corpus:', len(chars))
-
-print("Creating training set...")
-X, Y = build_data(text, Tx, stride = 3)
-print("Vectorizing training set...")
-x, y = vectorization(X, Y, n_x = len(chars), char_indices = char_indices) 
-print("Loading model...")
-model = load_model('models/model_shakespeare_kiank_350_epoch.h5')
-
-"""
-def generate_output():
-    generated = ''
-    #sentence = text[start_index: start_index + Tx]
-    #sentence = '0'*Tx
-    usr_input = input("Write the beginning of your poem, the Shakespeare machine will complete it. Your input is: ")
-    # zero pad the sentence to Tx characters.
-    sentence = ('{0:0>' + str(Tx) + '}').format(usr_input).lower()
-    generated += usr_input 
-
-    sys.stdout.write("\n\nHere is your poem: \n\n") 
-    sys.stdout.write(usr_input)
-    for i in range(400):
-
-        x_pred = np.zeros((1, Tx, len(chars)))
-
-        for t, char in enumerate(sentence):
-            if char != '0':
-                x_pred[0, t, char_indices[char]] = 1.
-
-        preds = model.predict(x_pred, verbose=0)[0]
-        next_index = sample(preds, chars, temperature = 1.0)
-        next_char = indices_char[next_index]
-
-        generated += next_char
-        sentence = sentence[1:] + next_char
-
-        sys.stdout.write(next_char)
-        sys.stdout.flush()
-
-        if next_char == '\n':
-            continue
 
 def predict_next_cities_(model, entries, citiesIndex, number, Tx):
     
